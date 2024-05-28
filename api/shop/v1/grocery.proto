@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package api.shop.v1;
+
+option go_package = "kratos_test/api/shop/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.shop.v1";
+
+// 每次当proto文件修改后，都应该重新执行make proto，生成对应的pb.go文件，否则代码不会生效
+// FIXME 商品-控制层-接口
+service Grocery {
+  rpc CreateGrocery (CreateGroceryRequest) returns (CreateGroceryReply);
+  rpc UpdateGrocery (UpdateGroceryRequest) returns (UpdateGroceryReply);
+  rpc DeleteGrocery (DeleteGroceryRequest) returns (DeleteGroceryReply);
+  rpc GetGrocery (GetGroceryRequest) returns (GetGroceryReply);
+  rpc ListGrocery (ListGroceryRequest) returns (ListGroceryReply);
+}
+// ----------Request----------
+message CreateGroceryRequest {
+  string id = 1;  // 如果id=0，代表需要新建一个商品
+  string name = 2; // 商品名称
+  string description = 3; // 商品描述
+  int32 price = 4; // 商品价格
+  string image = 5; // 商品图片
+  string category = 6; // 商品分类
+}
+message UpdateGroceryRequest {
+  string id = 1;
+  string name = 2; // 商品名称
+  string description = 3; // 商品描述
+  int32 price = 4; // 商品价格
+  string image = 5; // 商品图片
+  string category = 6; // 商品分类
+}
+message DeleteGroceryRequest {
+  string id = 1;
+}
+message GetGroceryRequest {
+  string id = 1;
+}
+message ListGroceryRequest {
+  repeated string id = 1;
+}
+// ----------Reply----------
+message CreateGroceryReply {
+  string status = 1;
+  string msg = 2;
+  int64 timestamp = 3;
+  string id = 4;
+}
+message UpdateGroceryReply {
+  string status = 1;
+  string msg = 2;
+  int64 timestamp = 3;
+  string id = 4;
+}
+message DeleteGroceryReply {
+  string status = 1;
+  string msg = 2;
+  int64 timestamp = 3;
+  string id = 4;
+}
+message GetGroceryReply {
+  string status = 1;
+  string msg = 2;
+  int64 timestamp = 3;
+  GroceryEntity grocery = 4;
+}
+message ListGroceryReply {
+  string status = 1;
+  string msg = 2;
+  int64 timestamp = 3;
+  GroceryEntity grocery = 4;
+}
+// ----------商品字段----------
+message GroceryEntity {
+  string id = 1;
+  string name = 2; // 商品名称
+  string description = 3; // 商品描述
+  int32 price = 4; // 商品价格
+  string image = 5; // 商品图片
+  string category = 6; // 商品分类
+}
