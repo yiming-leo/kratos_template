@@ -1,6 +1,12 @@
 # Kratos Project Template
+this template is the modified version for traditional Kratos layout, it has a better design and arch.
 
 ## Install Kratos
+1. pls makesure your environment has golang & kratos cli
+2. use following cmd to generate a new project: 
+```bash
+kratos new <your_kratos_name> --repo-url=https://github.com/ingru-ai/kratos_template.git
+```
 ```
 go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
 ```
