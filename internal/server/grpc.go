@@ -27,7 +27,7 @@ func NewGRPCServer(c *conf.Server, logger log.Logger) *grpc.Server {
 		opts = append(opts, grpc.Timeout(c.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
-
+	// TODO 业务注册
 	shopapi.RegisterGroceryServer(srv, service.NewGroceryService())
 	return srv
 }

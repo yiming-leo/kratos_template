@@ -7,7 +7,7 @@ option java_multiple_files = true;
 option java_package = "api.shop.v1";
 
 // 每次当proto文件修改后，都应该重新执行make proto，生成对应的pb.go文件，否则代码不会生效
-// FIXME 商品-控制层-接口
+// 商品-控制层-接口
 service Grocery {
   rpc CreateGrocery (CreateGroceryRequest) returns (CreateGroceryReply);
   rpc UpdateGrocery (UpdateGroceryRequest) returns (UpdateGroceryReply);

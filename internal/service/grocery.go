@@ -20,6 +20,7 @@ func NewGroceryService() *GroceryService {
 
 // CreateGrocery FIXME 商品-业务层-创建商品
 func (s *GroceryService) CreateGrocery(ctx context.Context, req *shopapi.CreateGroceryRequest) (*shopapi.CreateGroceryReply, error) {
+	// TODO 取ctx的地址，这里已经实现了
 	// 接下来可以自定义修改groceryEntity
 	req.Id = "10001"
 	timestamp := time.Now().Unix()
