@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  # 建议K8S所有的命名都使用-，而不是_
+  name: test-server1-deployment  # 指定pod名字
+  namespace: kratos-test  # 指定命名空间
+spec:
+  replicas: 2  # 需要启动的此app的数量，即pod数量，负载均衡用
+  selector:
+    matchLabels:
+      app: test-server1  # 选择器，用于给service做匹配
+  template:
+    metadata:
+      labels:
+        app: test-server1
+    spec:
+      containers:
+        - name: test-server1
+          image: 192.168.2.14:214/kratos_test/test_server1:v1.0  # 镜像地址，这个在Harbor里，因为前缀是ip地址
+          ports:
+            - containerPort: 8000  # http端口
+            - containerPort: 9000  # grpc端口
+      imagePullSecrets:
+        - name: myregistrykey  # 指定K8S拉取Harbor所需的密钥

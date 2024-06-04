@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kratos-test-server1
+  namespace: kratos-test  # service's namespace
+spec:
+  type: NodePort  # always NodePort
+  selector:
+    app: test-server1  # this value must be the same with the 'app' in the deployment.yaml
+  ports:  # we can always see the 'port' has the same value with the 'targetPort'
+    - name: http-port
+      protocol: TCP
+      port: 8000  # service http api
+      targetPort: 8000  # pod http api
+      nodePort: 30800  # output http api, you can access the service by this port
+    - name: grpc-port
+      protocol: TCP
+      port: 9000  # service grpc api
+      targetPort: 9000  # pod grpc api
+      nodePort: 30900  # output grpc api, you can access the service by this port

@@ -7,6 +7,7 @@ WORKDIR /src
 
 # 设置 Go 代理并构建应用。你可以根据自己的构建命令进行相应的替换。
 # 此处示例使用 GOPROXY 环境变量设置为国内代理，并使用 make 命令进行应用构建。
+# RUN GOPROXY=https://proxy.golang.org,direct make build
 RUN GOPROXY=https://goproxy.cn,direct make build
 
 # 使用 Debian slim 镜像作为最终镜像
