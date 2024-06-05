@@ -14,12 +14,12 @@ echo "Checking Harbor health..."
 # 0. Basic Preparation: Harbor(we use Harbor instead of Dockerhub), K8S, Docker, SSH Keys already exist.
 # 0.1. check Harbor is existed
 # shellcheck disable=SC2154
-harbor_domain=${harbor_ip}
-response=$(curl -s -o /dev/null -w "%{http_code}" http://${harbor_domain}/api/v2.0/health)
+
+response=$(curl -s -o /dev/null -w "%{http_code}" http://${harbor_ip}/api/v2.0/health)
 if [ "$response" = "200" ]; then
     echo "Harbor server is accessible."
 else
-    echo "Harbor server at http://${harbor_domain} not accessible or Health API not responding with HTTP 200." >&2
+    echo "Harbor server at http://${harbor_ip} not accessible or Health API not responding with HTTP 200." >&2
     exit 1
 fi
 # 0.2. check K8S is existed and healthy
