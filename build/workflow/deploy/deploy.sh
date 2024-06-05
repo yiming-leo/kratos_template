@@ -61,12 +61,14 @@ echo "-------------\033[32m Passed all checks, ready to deploy microservice. \03
 #sudo sed -i '$i\  "insecure-registries": ["192.168.2.14:214"]' /etc/docker/daemon.json  # 插入语句
 # 1.3. Restart Docker to make the changes take effect
 #sudo systemctl restart docker
-echo -e "-------------\033[34m Docker Pushing Harbor \033[0m------------"
+
+#echo -e "-------------\033[34m Docker Pushing Harbor \033[0m------------"
 # Docker Push
-docker build -t 192.168.2.14:214/kratos_test/test_server1:v1.0 .  # （需要在docker所在的机器上执行）构建镜像
-docker login 192.168.2.14:214 -u admin -p Ingruharbor123456  # （需要在docker所在的机器上执行）如果要用内网Harbor，只能登录，否则默认推送到dockerhub
-docker push 192.168.2.14:214/kratos_test/test_server1:v1.0  # （需要在docker所在的机器上执行）推送镜像
-echo -e "-------------\033[32m Harbor Archived \033[0m------------"
+#docker build -t 192.168.2.14:214/kratos_test/test_server1:v1.0 .  # （需要在docker所在的机器上执行）构建镜像
+#docker login 192.168.2.14:214 -u admin -p Ingruharbor123456  # （需要在docker所在的机器上执行）如果要用内网Harbor，只能登录，否则默认推送到dockerhub
+#docker push 192.168.2.14:214/kratos_test/test_server1:v1.0  # （需要在docker所在的机器上执行）推送镜像
+#echo -e "-------------\033[32m Harbor Archived \033[0m------------"
+
 # 2. Modify ./build/deployment.yaml to use the correct image and name the app correctly
 
 # 2.1 Create k8s-docker-secret for K8S pulling images from Harbor, and replace name at 'imagePullSecrets'

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	shopapi "kratos_test/api/shop/v1"
+	"strconv"
 	"time"
 )
 
@@ -21,13 +22,15 @@ func NewGroceryService() *GroceryService {
 // CreateGrocery FIXME 商品-业务层-创建商品
 func (s *GroceryService) CreateGrocery(ctx context.Context, req *shopapi.CreateGroceryRequest) (*shopapi.CreateGroceryReply, error) {
 	// TODO 取ctx的地址，这里已经实现了
-	// 接下来可以自定义修改groceryEntity
+	// 从req中接收到请求的参数，接下来可以自定义修改groceryEntity
 	req.Id = "10001"
+	stringPrice := strconv.FormatInt(req.Price, 10)
+	fmt.Printf("stringPrice is %s", stringPrice)
 	timestamp := time.Now().Unix()
 	fmt.Printf("created groceryEntity: %s\n", req)
 	reply := &shopapi.CreateGroceryReply{
 		Status:    "200",
-		Msg:       "Create Successfully!",
+		Msg:       "Create Successfully: " + req.Name + " " + req.Description + " " + stringPrice + " " + req.Image + " " + req.Category,
 		Timestamp: timestamp,
 		Id:        req.Id,
 	}

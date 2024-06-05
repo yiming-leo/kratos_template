@@ -20,7 +20,7 @@ message CreateGroceryRequest {
   string id = 1;  // 如果id=0，代表需要新建一个商品
   string name = 2; // 商品名称
   string description = 3; // 商品描述
-  int32 price = 4; // 商品价格
+  int64 price = 4; // 商品价格
   string image = 5; // 商品图片
   string category = 6; // 商品分类
 }
