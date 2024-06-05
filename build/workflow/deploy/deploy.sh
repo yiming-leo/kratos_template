@@ -166,6 +166,7 @@ else
    # 如果kubectl命令运行失败， $? 将返回非0值
    echo "Failed to apply deployment."
 fi
+echo "--------------------------\033[32m Deployed APP Successfully!. \033[0m-------------------------"
 # 6.3. Check the status of the service
 # 7. Check the status of the app
 
