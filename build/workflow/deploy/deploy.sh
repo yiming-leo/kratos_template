@@ -89,7 +89,7 @@ else
     echo "Failed to create namespace '${namespace}'."
 fi
 # 4. Delete former app's cache on each node of K8S
-
+# FIXME it's too dangerous to delete pod directly
 # 遍历每个 IP 地址
 for ip in "${k8s_ips[@]}"
 do
@@ -128,25 +128,45 @@ done
 echo "-------------\033[32m Related caches are cleaned carefully for ${pod_name}. \033[0m------------"
 
 # 5. Deploy deployment.yaml to K8S cluster
-# 5.1. Delete running related pod
+# 5.1. Delete running related pod with specific name
+echo -e "-------------\033[34m Deleting Related Pods \033[0m------------"
 kubectl get pods -n ${namespace} | grep ${pod_name} | awk '{print $1}' | xargs kubectl delete pod
+echo "-------------\033[32m Related pods are cleaned carefully for ${pod_name}. \033[0m------------"
 # 5.2. Execute command on the control-panel
+echo -e "-------------\033[34m Deploying deployment.yaml \033[0m------------"
 kubectl apply -f deployment.yaml
+# 检查操作的返回状态
+if [ $? -eq 0 ]; then
+    # 如果kubectl命令成功执行， $? 将返回 0
+    echo "Deployment applied successfully."
+    # 检查deployment的状态，确保所有的Pod都成功启动了
+    kubectl rollout status deployment/${pod_name} -n ${namespace}
+    if [ $? -eq 0 ]; then
+        echo "Deployment rollout succeeded."
+    else
+        echo "Deployment rollout failed."
+    fi
+else
+    # 如果kubectl命令运行失败， $? 将返回非0值
+    echo "Failed to apply deployment."
+fi
+echo "-------------\033[32m Deployed deployment.yaml for ${pod_name}. \033[0m------------"
 # 5.3. Get callback for checking the status of the app
 # 6. Expose the service to the internet
+echo -e "-------------\033[34m Reexpose Service for ${pod_name}. \033[0m------------"
 # 6.1. Check status of deployments and services
-"
 kubectl get deployments --all-namespaces
 kubectl get services --all-namespaces
-"
 # 6.2. Expose the service to the internet
-"
 kubectl apply -f service.yaml
-"
+if [ $? -eq 0 ]; then
+   # 如果kubectl命令成功执行， $? 将返回 0
+   echo "Deployment applied successfully."
+else
+   # 如果kubectl命令运行失败， $? 将返回非0值
+   echo "Failed to apply deployment."
+fi
 # 6.3. Check the status of the service
-"
-kubectl get services --all-namespaces
-"
 # 7. Check the status of the app
 
 
